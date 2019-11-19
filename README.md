@@ -68,8 +68,14 @@ const chainId = 333; // chainId of the developer testnet
 const msgVersion = 1; // current msgVersion
 const VERSION = bytes.pack(chainId, msgVersion);
 
-// Populate the wallet with an account
-const privateKey= '3375F915F3F9AE35E6B301B7670F53AD1A5BE15D8221EC7FD5E503F21D3450C8';
+//***********************************
+//Delete the private key example below and replace with your own testnet private key. Always handle it securely.
+//***********************************
+const privateKey= '8f7bb911e3a47647ec965d87ad02fffdb5f90e9ad0416beb788141121c4525ac';
+//***********************************
+//Delete the private key example above and replace with your own testnet private key. Always handle it securely.
+//***********************************
+
 
 zilliqa.wallet.addByPrivateKey(privateKey);
 
@@ -94,20 +100,7 @@ async function testBlockchain() {
     const isGasSufficient = myGasPrice.gte(new BN(minGasPrice.result)); // Checks if your gas price is less than the minimum gas price
     console.log(`Is the gas price sufficient? ${isGasSufficient}`);
 
-    // Send a transaction to the network
-    console.log("Sending a payment transaction to the network...");
-    const tx = await zilliqa.blockchain.createTransaction(
-      zilliqa.transactions.new({
-        version: VERSION,
-        toAddr: "0xA54E49719267E8312510D7b78598ceF16ff127CE",
-        amount: new BN(units.toQa("1", units.Units.Zil)), // Sending an amount in Zil (1) and converting the amount to Qa
-        gasPrice: myGasPrice, // Minimum gasPrice veries. Check the `GetMinimumGasPrice` on the blockchain
-        gasLimit: Long.fromNumber(1)
-      })
-    );
 
-    console.log(`The transaction status is:`);
-    console.log(tx.receipt);
 
     // Deploy a contract
     console.log(`Deploying a new contract....`);
@@ -188,7 +181,7 @@ async function testBlockchain() {
     console.log(hello.address);
     //Following line added to fix issue https://github.com/Zilliqa/Zilliqa-JavaScript-Library/issues/168
     const deployedContract = zilliqa.contracts.at(hello.address);
-    
+
     //Create a new timebased message and call setHello
     const newMsg = 'Hello, the time is ' + Date.now();
     console.log('Calling setHello transition with msg: ' + newMsg);
@@ -224,6 +217,7 @@ async function testBlockchain() {
 }
 
 testBlockchain();
+
 
 ```
 
